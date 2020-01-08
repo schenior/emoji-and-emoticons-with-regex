@@ -1,0 +1,16 @@
+# Regex for emojis and emoticons:
+
+emoji <- c("[\U{1F300}-\U{1F6FF}]", "[\U{1F900}-\U{1F9FF}]", "\U{2764}")  # 😂 etc
+emoticon <- c("(^|\\s):[DPp]+\\b", "(^|\\s):[/)(|]+($|\\s)",              # :D, :)
+              "(^|\\s);[/)(|]+($|\\s)", "(^|\\s);[/)(|]+($|\\s)",         # ;D, ;)
+              "\\b(x|X)D+\\b")                                            # XD
+discordemoji <- ":[:alpha:]+:"                                            # Discord-community-specific: :hmm: etc
+anyemoji <- paste(c(emoji, emoticon, discordemoji), collapse="|")
+
+
+# Example function - counting number of emoji + emoticons in comment:
+
+countemojis <- function(x){
+  e <- str_count(x, anyemoji)
+  return(e)
+}
